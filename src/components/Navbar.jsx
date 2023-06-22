@@ -1,0 +1,12 @@
+import React from 'react'
+
+export default function Navbar() {
+    return (
+        <nav className='fixed top-0 left-0 flex justify-center text-white font-bold bg-black p-4 w-full'>
+            <div className='flex justify-between w-[600px]'>
+                <a href=''>User Vinz</a>
+                <a href=''>Log Out</a>
+            </div>
+        </nav>
+    )
+}
