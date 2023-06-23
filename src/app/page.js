@@ -59,7 +59,7 @@ export default async function Posts() {
           </Link>
         ))}
       </ul>
-      <button className='custom-btn btn-15 m-5'>Add Expense</button>
+      <a className='custom-btn btn-15 m-5' href='./bill/new'>Add Expense</a>
     </div>
   );
 }
