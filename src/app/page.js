@@ -16,23 +16,22 @@ export default async function Posts() {
     { id: 4, userId: 1, amount: 1.6, title: "Croissant" },
   ]
 
-  function handleTransactionClick(trans) {
-    history.push({
-      pathname: "/bill",
-      state: { transaction: trans }
-    });
-  }
+  let { data: usersSupa, error } = await supabase
+  .from('users')
+  .select("*")
+{console.log(usersSupa)}
 
   return (
     <div className="w-[600px] flex flex-col justify-center items-center">
       <h1 className="w-[600px]">Smash Turnier</h1>
       <h2 className="w-[600px]">Overview</h2>
       <ul className="w-[600px]">
-        {users.map((user) => (
+
+        {usersSupa.map((user) => (
           <a href='./bill'>
             <li
               className="w-full flex justify-between p-2"
-              key={user.id}
+              key={user.userId}
               onClick={() => handleTransactionClick(trans)}
             >
               <p>{user.username}</p>
@@ -61,6 +60,7 @@ export default async function Posts() {
       </ul>
       <a className='custom-btn btn-15 m-5' href='./bill/new'>Add Expense</a>
     </div>
+
   );
 }
 
