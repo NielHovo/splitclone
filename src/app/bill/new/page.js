@@ -1,17 +1,28 @@
-function Home() {
-  let users = [
-    { id: 1, username: 'Hyusoko', balance: -35.4 },
-    { id: 2, username: 'Biene', balance: 0 },
-    { id: 3, username: 'BepisLoca', balance: 35.4 }
-  ];
+"use client";
+import { useEffect, useState } from 'react';
+import supabase from "../../supabaseConnection";
+
+async function Home() {
+  let { data: users, error } = await supabase.from("users").select("*");
+  const [title, setTitle] = useState('');
+
+  const handleSubmit = async () => {
+    console.log("This was submitted: " + titleRef.current.value)
+    await supabase
+      .from('transactions')
+      .insert([
+        { title: 'Hier könnte Ihre Werbung stehen', amount: 80, userId: 1 }, //Nicht dynamisch geschafft, aber es pusht :'D
+      ])
+      .select()
+    }
   
   return (
     <>
       <div className="w-[600px] flex flex-col justify-center items-center border rounded-xl p-5">
         <h1 className=" ml-10 w-[600px]">Smash Turnier</h1>
-        <form className="flex flex-col" action="/send-data-here" method="post">
+        <form className="flex flex-col" onSubmit={handleSubmit} method="post">
           <label for="title">Titel:</label>
-          <input className="pad-b" type="text" id="title" name="title" placeholder="Insert Title" required />
+          <input className="pad-b" value={title} onChange={(e) => setTitle(e.target.value)} type="text" id="title" name="title" placeholder="Insert Title" required />
           <label for="payer">Who paid?:</label>
           <select name="payer" className="pad-b">
             <option selected="selected" hidden="">
@@ -37,9 +48,10 @@ function Home() {
               <p>
                 <input 
                   type="number"
-                  className="w-[100px] border mr-1"
+                  className="w-[100px] border mr-1 number-field"
                   name={`portion_${user.id}`} id={`portion_${user.id}`}
-                  value="0" class="number-field"
+                  placeholder="0"
+                  min={0}
                 />€
               </p>
             </div>

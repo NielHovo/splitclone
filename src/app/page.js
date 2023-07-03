@@ -4,18 +4,6 @@ import supabase from "./supabaseConnection";
 import Link from "next/link";
 
 export default async function Posts() {
-  let users = [
-    { id: 1, username: "Hyusoko", balance: -35.4 },
-    { id: 2, username: "Biene", balance: 0 },
-    { id: 3, username: "BepisLoca", balance: 35.4 },
-  ];
-  let transactions = [
-    { id: 1, userId: 3, amount: 15, title: "Venue Fees" },
-    { id: 2, userId: 3, amount: 57.4, title: "Food" },
-    { id: 3, userId: 2, amount: 37, title: "2-Day-Ticket" },
-    { id: 4, userId: 1, amount: 1.6, title: "Croissant" },
-  ];
-
   let { data: usersSupa, error } = await supabase.from("users").select("*");
 
   let { data: transactionsSupa, transactionserror } = await supabase
@@ -69,7 +57,7 @@ export default async function Posts() {
               <div>
                 <p className="font-bold">{trans.title}</p>
                 <p>
-                  {users.find((user) => user.id === trans.userId)?.username}
+                  {usersSupa.find((user) => user.userId === trans.userId)?.username}
                 </p>
               </div>
               <p>{trans.amount.toFixed(2)}€</p>
