@@ -1,8 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import supabase from "../../supabaseConnection";
+import { useRouter } from "next/navigation";
 
 function Home() {
+  const router = useRouter();
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -55,6 +57,7 @@ function Home() {
       setUserId("");
 
       console.log("Expense added successfully:", data);
+      router.push("/");
     } catch (error) {
       console.error("Error adding expense:", error);
     }
